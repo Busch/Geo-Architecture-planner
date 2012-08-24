@@ -1,0 +1,966 @@
+<html>
+
+<head>
+	
+<style type="text/css">
+input.button_style { background-color:#aaa; color:#fff; width:95px; border:6px solid #ddd; }
+body { background: url('/images/layout/background.jpg') 50% -100px fixed no-repeat #1c1d26; font-family: Tahoma, Verdana, Arial, Sans-serif; 
+}
+
+/* Info Box */
+
+table#elements td .info {
+	background: white !important;
+	color: black;
+	display: none;
+	margin: 0 2px;
+	min-height: 5em;
+	padding: 0.75em;
+	position: absolute;
+	margin-top: 1.5em;
+	width: 20em;
+	z-index: 200;
+	border-radius: 0.5em;
+	-o-border-radius: 0.5em;
+	-moz-border-radius: 0.5em;
+	-webkit-border-radius: 0.5em;
+	box-shadow: rgba(0, 0, 0, 0.75) 0 0 8px 2px;
+	-o-box-shadow: rgba(0, 0, 0, 0.75) 0 0 8px 2px;
+	-moz-box-shadow: rgba(0, 0, 0, 0.75) 0 0 8px 2px;
+	-webkit-box-shadow: rgba(0, 0, 0, 0.75) 0 0 8px 2px;
+}
+
+table#elements td .info h3 {
+	color: black;
+	font-weight: bold;
+	margin-bottom: 0.5em;
+	font-size: 1.6em;
+}
+
+table#elements td .info p {
+	margin-bottom: 0.75em;
+}
+
+table#elements td .info a:active,
+table#elements td .info a:hover {
+	color: #FF8215;
+}
+
+table#elements td .info *:last-child {
+	margin-bottom: 0;
+}
+
+
+table#elements td .links {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+table#elements td .links li {
+	margin: 0;
+	padding: 0;
+	display: inline;
+}
+
+table#elements td .links li:after {
+	content: ", ";
+}
+
+table#elements td .links li:last-child:after {
+	content: "";
+}
+
+
+</style>
+
+</head>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
+
+<script type="text/javascript">
+	$(function(){
+		$('#elements td').hover(function(){
+			var self = $(this).hasClass('active');
+			$('.active .info').fadeOut();
+			$('.active').removeClass('active');
+			if (!self) {
+				$(this).find('.info').fadeIn();
+				$(this).addClass('active');
+			}
+		});
+
+	})
+</script>
+
+
+
+<script language="JavaScript">
+<!--
+
+prec_average        = new Array(0,0,0,0,0,0,0,0);
+prec_month          = new Array(0,0,0,0,0,0,0);
+prec_month_no_rain  = new Array(0,0,0,0,0,0,0);
+
+temp_average_c		= new Array(0,0,0,0,0,0,0,0);
+temp_average_f 		= new Array(0,0,0,0,0,0,0,0);
+temp_max_c			= new Array(0,0,0,0,0,0,0,0);
+temp_max_f 			= new Array(0,0,0,0,0,0,0,0);
+temp_min_c 			= new Array(0,0,0,0,0,0,0,0);
+temp_min_f 			= new Array(0,0,0,0,0,0,0,0);
+
+climate_zone 		= new Array(0,0,0,0);
+climate_type 		= new Array(0,0,0,0);
+location_ty 		= new Array(0,0,0,0,0,0);
+
+height_average_m 	= new Array(0,0,0,0,0,0,0,0);
+height_average_ft 	= new Array(0,0,0,0,0,0,0,0);
+
+veloc_wind_max 		= new Array(0,0,0,0,0,0,0);
+veloc_wind_av_kn 	= new Array(0,0,0,0,0,0,0);
+veloc_wind_av_bft 	= new Array(0,0,0,0,0,0,0);
+veloc_wind_av_km 	= new Array(0,0,0,0,0,0,0);
+
+solar_rad_av_kwh 	= new Array(0,0,0,0,0,0,0,0);
+vegetation 			= new Array(0,0,0,0,0);
+water_access 		= new Array(0,0,0,0,0,0);
+volcano_radius 		= new Array(0,0,0,0);
+earthquake_risk 	= new Array(0,0,0,0,0);
+
+var drought = 0;
+var fire = 0;
+var flood = 0;
+var earthquake = 0;
+var infectious_deseases = 0;
+var earth_movement = 0;
+var precipitation = 0;
+var temperature = 0;
+var storm = 0;
+var volcano = 0;
+
+function calculate_result() {
+	
+	// Check for drought
+	if (prec_average[0] || 
+	prec_average[1] ||
+	prec_month_no_rain[4] ||
+	prec_month_no_rain[5] ||
+	prec_month_no_rain[6] ||
+	temp_average_c[6] ||
+	temp_average_c[7] ||
+	temp_average_f[6] ||
+	temp_average_f[7] ||
+	temp_max_c[6] ||
+	temp_max_c[7] ||
+	temp_max_f[6] ||
+	temp_max_f[7] ||
+	temp_min_c[6] ||
+	temp_min_c[7] ||
+	temp_min_f[6] ||
+	temp_min_f[7] ||
+	climate_zone[3] ||
+	climate_type[2] ||
+	location_ty[0] ||
+	veloc_wind_av_kn[2] ||
+	veloc_wind_av_kn[3] ||
+	veloc_wind_av_kn[4] ||
+	veloc_wind_av_kn[5] ||
+	veloc_wind_av_kn[6] ||
+	veloc_wind_av_bft[2] ||
+	veloc_wind_av_bft[3] ||
+	veloc_wind_av_bft[4] ||
+	veloc_wind_av_bft[5] ||
+	veloc_wind_av_bft[6] ||
+	veloc_wind_av_km[2] ||
+	veloc_wind_av_km[3] ||
+	veloc_wind_av_km[4] ||
+	veloc_wind_av_km[5] ||
+	veloc_wind_av_km[6] ||
+	solar_rad_av_kwh[5] ||
+	solar_rad_av_kwh[6] ||
+	solar_rad_av_kwh[7] ||
+	vegetation[2] ||
+	vegetation[3] ||
+	water_access[5]
+	== 1) { drought = 1; } else { drought = 0; }
+	// End Check for drought
+	
+	// Check for fire
+	if (prec_average[0] ||
+	prec_month_no_rain[4] ||
+	prec_month_no_rain[5] ||
+	prec_month_no_rain[6] ||
+	temp_average_c[6] ||
+	temp_average_c[7] ||
+	temp_average_f[6] ||
+	temp_average_f[7] ||
+	temp_max_c[6] ||
+	temp_max_c[7] ||
+	temp_max_f[6] ||
+	temp_max_f[7] ||
+	temp_min_c[6] ||
+	temp_min_c[7] ||
+	temp_min_f[6] ||
+	temp_min_f[7] ||
+	location_ty[1] ||
+	solar_rad_av_kwh[5] ||
+	solar_rad_av_kwh[6] ||
+	solar_rad_av_kwh[7] ||
+	vegetation[1] ||
+	vegetation[2] ||
+	volcano_radius[2] ||
+	volcano_radius[3]
+	== 1) { fire = 1; } else { fire = 0; }
+	// End Check for fire
+		
+	// Check for flood
+	if (prec_average[6] ||
+	prec_average[7] ||
+	prec_month[1] ||
+	prec_month[2] ||
+	climate_zone[3] ||
+	climate_type[1] ||
+	climate_type[3] ||
+	location_ty[0] ||
+	location_ty[1] ||
+	location_ty[3] ||
+	location_ty[5] ||
+	height_average_m[0] ||
+	height_average_m[1] ||
+	height_average_m[2] ||
+	height_average_ft[0] ||
+	height_average_ft[1] ||
+	height_average_ft[2] ||
+	veloc_wind_max[4] ||
+	veloc_wind_max[5] ||
+	veloc_wind_max[6] ||
+	veloc_wind_av_kn[4] ||
+	veloc_wind_av_kn[5] ||
+	veloc_wind_av_kn[6] ||
+	veloc_wind_av_bft[4] ||
+	veloc_wind_av_bft[5] ||
+	veloc_wind_av_bft[6] ||
+	veloc_wind_av_km[4] ||
+	veloc_wind_av_km[5] ||
+	veloc_wind_av_km[6] ||
+	vegetation[3] ||
+	water_access[0] ||
+	water_access[1] ||
+	water_access[4] ||
+	volcano_radius[2] ||
+	volcano_radius[3] ||
+	earthquake_risk[2] ||
+	earthquake_risk[3] ||
+	earthquake_risk[4]
+	== 1) { flood = 1; } else { flood = 0; }
+	// End Check for flood
+	
+	// Check for earthquake
+	if (earthquake_risk[2] ||
+	earthquake_risk[3] ||
+	earthquake_risk[4]
+	== 1) { earthquake = 1; } else { earthquake = 0; }
+	// End Check for earthquake
+	
+	// Check for infectious deseases
+	if (prec_average[6] || 
+	prec_average[7] ||
+	prec_month[1] ||
+	prec_month_no_rain[1] ||
+	temp_average_c[7] ||
+	temp_average_f[7] ||
+	temp_max_c[6] ||
+	temp_max_c[7] ||
+	temp_max_f[6] ||
+	temp_max_f[7] ||
+	climate_zone[3] ||
+	climate_type[1] ||
+	water_access[4] ||
+	water_access[5]
+	== 1) { infectious_deseases = 1; } else { infectious_deseases = 0; }
+	// End Check for infectious deseases
+	
+	// Check for earth movement
+	if (prec_average[6] || 
+	prec_average[7] ||
+	prec_month[1] ||
+	prec_month_no_rain[5] ||
+	prec_month_no_rain[6] ||
+	location_ty[0] ||
+	location_ty[2] ||
+	location_ty[5] ||
+	vegetation[2] ||
+	vegetation[3] ||
+	volcano_radius[2] ||
+	volcano_radius[3] ||
+	earthquake_risk[2] ||
+	earthquake_risk[3] ||
+	earthquake_risk[4]
+	== 1) { earth_movement = 1; } else { earth_movement = 0; }
+	// End Check for earth movement
+	
+	// Check for precipitation
+	if (prec_average[0] ||
+	prec_average[1] ||
+	prec_average[6] || 
+	prec_average[7] ||
+	prec_month[1] ||
+	prec_month_no_rain[1] ||
+	prec_month_no_rain[6] ||
+	climate_zone[3] ||
+	climate_type[1] ||
+	climate_type[2]
+	== 1) { precipitation = 1; } else { precipitation = 0; }
+	// End Check for precipitation
+	
+	// Check for temperature
+	if (temp_average_c[0] ||
+	temp_average_c[1] ||
+	temp_average_c[2] ||
+	temp_average_c[6] ||
+	temp_average_c[7] ||
+	temp_average_f[0] ||
+	temp_average_f[1] ||
+	temp_average_f[2] ||
+	temp_average_f[6] ||
+	temp_average_f[7] ||
+	temp_max_c[0] ||
+	temp_max_c[1] ||
+	temp_max_c[6] ||
+	temp_max_c[7] ||
+	temp_max_f[0] ||
+	temp_max_f[1] ||
+	temp_max_f[6] ||
+	temp_max_f[7] ||
+	temp_min_c[0] ||
+	temp_min_c[1] ||
+	temp_min_c[7] ||
+	temp_min_f[0] ||
+	temp_min_f[1] ||
+	temp_min_f[7] ||
+	climate_zone[0] ||
+	climate_zone[1] ||
+	climate_zone[3] ||
+	climate_type[0] ||
+	climate_type[1] ||
+	climate_type[2] ||
+	solar_rad_av_kwh[0] ||
+	solar_rad_av_kwh[1] ||
+	solar_rad_av_kwh[5] ||
+	solar_rad_av_kwh[6] ||
+	solar_rad_av_kwh[7]
+	== 1) { temperature = 1; } else { temperature = 0; }
+	// End Check for temperature
+	
+	// Check for storm
+	if (temp_average_c[7] ||
+	temp_average_f[7] ||
+	temp_max_c[7] ||
+	temp_max_f[7] ||
+	temp_min_c[7] ||
+	temp_min_f[7] ||
+	location_ty[0] ||
+	location_ty[1] ||
+	location_ty[2] ||
+	location_ty[3] ||
+	location_ty[4] ||
+	height_average_m[6] ||
+	height_average_m[7] ||
+	height_average_ft[6] ||
+	height_average_ft[7] ||	
+	veloc_wind_max[3] ||
+	veloc_wind_max[4] ||
+	veloc_wind_max[5] ||
+	veloc_wind_max[6] ||
+	veloc_wind_av_kn[2] ||
+	veloc_wind_av_kn[3] ||
+	veloc_wind_av_kn[4] ||
+	veloc_wind_av_kn[5] ||
+	veloc_wind_av_kn[6] ||
+	veloc_wind_av_bft[2] ||
+	veloc_wind_av_bft[3] ||
+	veloc_wind_av_bft[4] ||
+	veloc_wind_av_bft[5] ||
+	veloc_wind_av_bft[6] ||
+	veloc_wind_av_km[2] ||
+	veloc_wind_av_km[3] ||
+	veloc_wind_av_km[4] ||
+	veloc_wind_av_km[5] ||
+	veloc_wind_av_km[6]
+	== 1) { storm = 1; } else { storm = 0; }
+	// End Check for storm
+		
+	// Check for volcano
+	if (volcano_radius[2] ||
+	volcano_radius[3]
+	== 1) { volcano = 1; } else { volcano = 0; }
+	// End Check for volcano
+			
+	check_inhibiting_factor();
+}
+
+function precipitation_average(a) { if (prec_average[a] == 0) { prec_average[a] = 1; } else { prec_average[a] = 0; } }
+function precipitation_month(a) { if (prec_month[a] == 0) { prec_month[a] = 1; } else { prec_month[a] = 0; } }
+function precipitation_month_no_rain(a) { if (prec_month_no_rain[a] == 0) { prec_month_no_rain[a] = 1; } else { prec_month_no_rain[a] = 0; } }
+
+function temperature_average_c(a) { if (temp_average_c[a] == 0) { temp_average_c[a] = 1; } else { temp_average_c[a] = 0; } }
+function temperature_average_f(a) { if (temp_average_f[a] == 0) { temp_average_f[a] = 1; } else { temp_average_f[a] = 0; } }
+function temperature_max_c(a) { if (temp_max_c[a] == 0) { temp_max_c[a] = 1; } else { temp_max_c[a] = 0; } }
+function temperature_max_f(a) { if (temp_max_f[a] == 0) { temp_max_f[a] = 1; } else { temp_max_f[a] = 0; } }
+function temperature_min_c(a) { if (temp_min_c[a] == 0) { temp_min_c[a] = 1; } else { temp_min_c[a] = 0; } }
+function temperature_min_f(a) { if (temp_min_f[a] == 0) { temp_min_f[a] = 1; } else { temp_min_f[a] = 0; } }
+
+function climate_zone_1(a) { if (climate_zone[a] == 0) { climate_zone[a] = 1; } else { climate_zone[a] = 0; } }
+function climate_type_1(a) { if (climate_type[a] == 0) { climate_type[a] = 1; } else { climate_type[a] = 0; } }
+function location_ty_1(a) { if (location_ty[a] == 0) { location_ty[a] = 1; } else { location_ty[a] = 0; } }
+
+function height_average_meter(a) { if (height_average_m[a] == 0) { height_average_m[a] = 1; } else { height_average_m[a] = 0; } }
+function height_average_feet(a) { if (height_average_ft[a] == 0) { height_average_ft[a] = 1; } else { height_average_ft[a] = 0; } }
+
+function velocity_wind_max(a) { if (veloc_wind_max[a] == 0) { veloc_wind_max[a] = 1; } else { veloc_wind_max[a] = 0; } }
+function velocity_wind_av_kn(a) { if (veloc_wind_av_kn[a] == 0) { veloc_wind_av_kn[a] = 1; } else { veloc_wind_av_kn[a] = 0; } }
+function velocity_wind_av_bft(a) { if (veloc_wind_av_bft[a] == 0) { veloc_wind_av_bft[a] = 1; } else { veloc_wind_av_bft[a] = 0; } }
+function velocity_wind_av_km(a) { if (veloc_wind_av_km[a] == 0) { veloc_wind_av_km[a] = 1; } else { veloc_wind_av_km[a] = 0; } }
+
+function solar_radiation_av_kwh(a) { if (solar_rad_av_kwh[a] == 0) { solar_rad_av_kwh[a] = 1; } else { solar_rad_av_kwh[a] = 0; } }
+function vegetation_1(a) { if (vegetation[a] == 0) { vegetation[a] = 1; } else { vegetation[a] = 0; } }
+function water_access_1(a) { if (water_access[a] == 0) { water_access[a] = 1; } else { water_access[a] = 0; } }
+function volcano_radius_1(a) { if (volcano_radius[a] == 0) { volcano_radius[a] = 1; } else { volcano_radius[a] = 0; } }
+function earthquake_risk_1(a) { if (earthquake_risk[a] == 0) { earthquake_risk[a] = 1; } else { earthquake_risk[a] = 0; } }
+      
+function print_array() {
+	
+	// var Ausgabe = "";
+	// for (var i = 0; i <= 7; i++) {
+    // Ausgabe = Ausgabe + '<span style="font-size: 20 px">' + prec_average[i] + '<\/span><br>';
+	// }
+	// document.write(Ausgabe);
+	
+	result0.innerHTML = "Drought        : " + drought + "<br>";
+	result1.innerHTML = "Fire           : " + fire + "<br>";
+	result2.innerHTML = "Flood          : " + flood + "<br>";
+	result3.innerHTML = "Earthquake     : " + earthquake + "<br>";
+	result4.innerHTML = "Infection      : " + infectious_deseases + "<br>";
+	result5.innerHTML = "Earth Movement : " + earth_movement + "<br>";
+	result6.innerHTML = "Precipitation  : " + precipitation + "<br>";
+	result7.innerHTML = "Temperature    : " + temperature + "<br>";
+	result8.innerHTML = "Storm          : " + storm + "<br>";
+	result9.innerHTML = "Volcano        : " + volcano;
+
+}
+     
+function check_inhibiting_factor() {
+	if (prec_month_no_rain[0] == 1) { 
+		drought = 0;
+		fire = 0; 
+	}
+	
+	print_array();
+}
+
+function output() {
+}
+
+function mark(which, type) {
+	
+	var which_button = "button" + which;
+	var color_hover = '#3333FF'; // rgb(51, 51, 255)
+	var color_normal = '#aaa'; // rgb(170, 170, 170)
+	var color_checked = 'red';
+	var checked = 0;
+	
+	element = document.getElementsByName(which_button)[0]; 
+	bgColor = element.style.backgroundColor; 
+	
+	if (bgColor == '' && type == 0) {		
+		new_color = color_hover;
+		document.getElementsByName(which_button)[0].style.backgroundColor=new_color;
+	} 
+	
+	if (bgColor == 'rgb(51, 51, 255)' && type == 1) {	
+		if(checked == 1) {
+			new_color = color_checked;
+			document.getElementsByName(which_button)[0].style.backgroundColor=new_color;
+			checked = 0;
+		} else {	
+			new_color = color_normal;
+			document.getElementsByName(which_button)[0].style.backgroundColor=new_color;
+		}
+	}
+	
+	if (bgColor == 'rgb(170, 170, 170)' && type == 0) {
+		new_color = color_hover;
+		document.getElementsByName(which_button)[0].style.backgroundColor=new_color;
+	}
+	
+	if (bgColor == 'rgb(170, 170, 170)' && type == 2) {
+		checked = 1;
+		new_color = color_checked;
+		document.getElementsByName(which_button)[0].style.backgroundColor=new_color;
+	}
+	
+	if (type == 2 && bgColor == 'rgb(51, 51, 255)') {
+		checked = 1;
+		new_color = color_checked;
+		document.getElementsByName(which_button)[0].style.backgroundColor=new_color;
+	} else if (type == 2 && bgColor == 'red') {
+		checked = 0;
+		new_color = color_normal;
+		document.getElementsByName(which_button)[0].style.backgroundColor=new_color;
+	}
+
+} // End function mark()
+
+-->
+</script>
+
+<form name="myForm">
+
+		<div id="container">
+			<div id="content">
+					
+				<table id="elements" cellpadding="0" cellspacing="0">
+				<tr><td>
+					<div class="element table">
+					<div class="info">
+						<h3>Bla</h3>
+						<p>Mehr bla bla</p>
+					</div>
+						<span style="color:#FF0000">Precipitation: </span>
+					</div>
+				</tr></td>
+				</table>
+
+				<input type="button" value="0 - 124" name="button0"
+				class="button_style" onMouseover="mark('0','0')"; onMouseout="mark('0','1')"; onClick="precipitation_average('0'); mark('0','2')">
+				<input type="button" value="125 - 274" name="button1" 
+				class="button_style" onMouseover="mark('1','0')"; onMouseout="mark('1','1')"; onClick="precipitation_average('1'); mark('1','2')"> 
+				<input type="button" value="275 - 474" name="button2" 
+				class="button_style" onMouseover="mark('2','0')"; onMouseout="mark('2','1')"; onClick="precipitation_average('2'); mark('2','2')"> 
+				<input type="button" value="475 - 724" name="button3" 
+				class="button_style" onMouseover="mark('3','0')"; onMouseout="mark('3','1')"; onClick="precipitation_average('3'); mark('3','2')">
+				<input type="button" value="725 -1474" name="button4" 
+				class="button_style" onMouseover="mark('4','0')"; onMouseout="mark('4','1')"; onClick="precipitation_average('4'); mark('4','2')"> 
+				<input type="button" value="1475 - 2474" name="button5" 
+				class="button_style" onMouseover="mark('5','0')"; onMouseout="mark('5','1')"; onClick="precipitation_average('5'); mark('5','2')"> 
+				<input type="button" value="2475 - 4975" name="button6" 
+				class="button_style" onMouseover="mark('6','0')"; onMouseout="mark('6','1')"; onClick="precipitation_average('6'); mark('6','2')"> 
+				<input type="button" value="> 4975" name="button7" 
+				class="button_style" onMouseover="mark('7','0')"; onMouseout="mark('7','1')"; onClick="precipitation_average('7'); mark('7','2')">
+
+				<br> 
+				<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</ a>
+
+				<input type="button" value="0" name="button8" 
+				class="button_style" onMouseover="mark('8','0')"; onMouseout="mark('8','1')"; onClick="precipitation_month('0'); mark('8','2')"> 
+				<input type="button" value="1 - 2" name="button9" 
+				class="button_style" onMouseover="mark('9','0')"; onMouseout="mark('9','1')"; onClick="precipitation_month('1'); mark('9','2')"> 
+				<input type="button" value="3 - 4" name="button10" 
+				class="button_style" onMouseover="mark('10','0')"; onMouseout="mark('10','1')"; onClick="precipitation_month('2'); mark('10','2')"> 
+				<input type="button" value="5 - 6" name="button11" 
+				class="button_style" onMouseover="mark('11','0')"; onMouseout="mark('11','1')"; onClick="precipitation_month('3'); mark('11','2')"> 
+				<input type="button" value="7 - 8" name="button12" 
+				class="button_style" onMouseover="mark('12','0')"; onMouseout="mark('12','1')"; onClick="precipitation_month('4'); mark('12','2')"> 
+				<input type="button" value="9 - 10" name="button13" 
+				class="button_style" onMouseover="mark('13','0')"; onMouseout="mark('13','1')"; onClick="precipitation_month('5'); mark('13','2')"> 
+				<input type="button" value="11 - 12" name="button14" 
+				class="button_style" onMouseover="mark('14','0')"; onMouseout="mark('14','1')"; onClick="precipitation_month('6'); mark('14','2')">
+
+				<br> 
+				<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</ a>
+
+				<input type="button" value="0" name="button15" 
+				class="button_style" onMouseover="mark('15','0')"; onMouseout="mark('15','1')"; onClick="precipitation_month_no_rain('0'); mark('15','2')"> 
+				<input type="button" value="1 - 2" name="button16" 
+				class="button_style" onMouseover="mark('16','0')"; onMouseout="mark('16','1')"; onClick="precipitation_month_no_rain('1'); mark('16','2')"> 
+				<input type="button" value="3 - 4" name="button17" 
+				class="button_style" onMouseover="mark('17','0')"; onMouseout="mark('17','1')"; onClick="precipitation_month_no_rain('2'); mark('17','2')"> 
+				<input type="button" value="5 - 6" name="button18" 
+				class="button_style" onMouseover="mark('18','0')"; onMouseout="mark('18','1')"; onClick="precipitation_month_no_rain('3'); mark('18','2')"> 
+				<input type="button" value="7 - 8" name="button19" 
+				class="button_style" onMouseover="mark('19','0')"; onMouseout="mark('19','1')"; onClick="precipitation_month_no_rain('4'); mark('19','2')"> 
+				<input type="button" value="9 - 10" name="button20" 
+				class="button_style" onMouseover="mark('20','0')"; onMouseout="mark('20','1')"; onClick="precipitation_month_no_rain('5'); mark('20','2')"> 
+				<input type="button" value="11 - 12" name="button21" 
+				class="button_style" onMouseover="mark('21','0')"; onMouseout="mark('21','1')"; onClick="precipitation_month_no_rain('6'); mark('21','2')">
+
+				<br> 
+
+				<a>Temperature: </ a>
+				<input type="button" value="< - 20" name="button22" 
+				class="button_style" onMouseover="mark('22','0')"; onMouseout="mark('22','1')"; onClick="temperature_average_c('0'); mark('22','2')"> 
+				<input type="button" value="-20 to -10" name="button23" 
+				class="button_style" onMouseover="mark('23','0')"; onMouseout="mark('23','1')"; onClick="temperature_average_c('1'); mark('23','2')"> 
+				<input type="button" value="-9 to 0" name="button24" 
+				class="button_style" onMouseover="mark('24','0')"; onMouseout="mark('24','1')"; onClick="temperature_average_c('2'); mark('24','2')"> 
+				<input type="button" value="+1 to +10" name="button25" 
+				class="button_style" onMouseover="mark('25','0')"; onMouseout="mark('25','1')"; onClick="temperature_average_c('3'); mark('25','2')"> 
+				<input type="button" value="+10 - +20" name="button26" 
+				class="button_style" onMouseover="mark('26','0')"; onMouseout="mark('26','1')"; onClick="temperature_average_c('4'); mark('26','2')"> 
+				<input type="button" value="+20 - +30" name="button27" 
+				class="button_style" onMouseover="mark('27','0')"; onMouseout="mark('27','1')"; onClick="temperature_average_c('5'); mark('27','2')"> 
+				<input type="button" value="+30 - +40" name="button28" 
+				class="button_style" onMouseover="mark('28','0')"; onMouseout="mark('28','1')"; onClick="temperature_average_c('6'); mark('28','2')"> 
+				<input type="button" value="> +40" name="button29" 
+				class="button_style" onMouseover="mark('29','0')"; onMouseout="mark('29','1')"; onClick="temperature_average_c('7'); mark('29','2')">
+ 
+				<br> 
+				<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</ a>
+
+				<input type="button" value="< -4" name="button30" 
+				class="button_style" onMouseover="mark('30','0')"; onMouseout="mark('30','1')"; onClick="temperature_average_f('0'); mark('30','2')"> 
+				<input type="button" value="-4 - +14" name="button31" 
+				class="button_style" onMouseover="mark('31','0')"; onMouseout="mark('31','1')"; onClick="temperature_average_f('1'); mark('31','2')"> 
+				<input type="button" value="+14 - +32" name="button32" 
+				class="button_style" onMouseover="mark('32','0')"; onMouseout="mark('32','1')"; onClick="temperature_average_f('2'); mark('32','2')"> 
+				<input type="button" value="+32 - +50" name="button33" 
+				class="button_style" onMouseover="mark('33','0')"; onMouseout="mark('33','1')"; onClick="temperature_average_f('3'); mark('33','2')"> 
+				<input type="button" value="+50 - +68" name="button34" 
+				class="button_style" onMouseover="mark('34','0')"; onMouseout="mark('34','1')"; onClick="temperature_average_f('4'); mark('34','2')"> 
+				<input type="button" value="+68 - +86" name="button35" 
+				class="button_style" onMouseover="mark('35','0')"; onMouseout="mark('35','1')"; onClick="temperature_average_f('5'); mark('35','2')"> 
+				<input type="button" value="+86 - +104" name="button36" 
+				class="button_style" onMouseover="mark('36','0')"; onMouseout="mark('36','1')"; onClick="temperature_average_f('6'); mark('36','2')"> 
+				<input type="button" value="> +104" name="button37" 
+				class="button_style" onMouseover="mark('37','0')"; onMouseout="mark('37','1')"; onClick="temperature_average_f('7'); mark('37','2')">
+ 
+				<br> 
+				<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</ a>
+
+				<input type="button" value="< -10" name="button38" 
+				class="button_style" onMouseover="mark('38','0')"; onMouseout="mark('38','1')"; onClick="temperature_max_c('0'); mark('38','2')"> 
+				<input type="button" value="-10 - 0" name="button39" 
+				class="button_style" onMouseover="mark('39','0')"; onMouseout="mark('39','1')"; onClick="temperature_max_c('1'); mark('39','2')"> 
+				<input type="button" value="0 - +10" name="button40" 
+				class="button_style" onMouseover="mark('40','0')"; onMouseout="mark('40','1')"; onClick="temperature_max_c('2'); mark('40','2')"> 
+				<input type="button" value="+10 - +20" name="button41" 
+				class="button_style" onMouseover="mark('41','0')"; onMouseout="mark('41','1')"; onClick="temperature_max_c('3'); mark('41','2')"> 
+				<input type="button" value="+20 - +30" name="button42" 
+				class="button_style" onMouseover="mark('42','0')"; onMouseout="mark('42','1')"; onClick="temperature_max_c('4'); mark('42','2')"> 
+				<input type="button" value="+30 - +40" name="button43" 
+				class="button_style" onMouseover="mark('43','0')"; onMouseout="mark('43','1')"; onClick="temperature_max_c('5'); mark('43','2')"> 
+				<input type="button" value="+40 - +50" name="button44" 
+				class="button_style" onMouseover="mark('44','0')"; onMouseout="mark('44','1')"; onClick="temperature_max_c('6'); mark('44','2')"> 
+				<input type="button" value="> +50" name="button45" 
+				class="button_style" onMouseover="mark('45','0')"; onMouseout="mark('45','1')"; onClick="temperature_max_c('7'); mark('45','2')">
+ 
+				<br> 
+				<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</ a>
+
+				<input type="button" value="< +14" name="button46" 
+				class="button_style" onMouseover="mark('46','0')"; onMouseout="mark('46','1')"; onClick="temperature_max_f('0'); mark('46','2')"> 
+				<input type="button" value="+14 - +32" name="button47" 
+				class="button_style" onMouseover="mark('47','0')"; onMouseout="mark('47','1')"; onClick="temperature_max_f('1'); mark('47','2')"> 
+				<input type="button" value="+32 - +50" name="button48" 
+				class="button_style" onMouseover="mark('48','0')"; onMouseout="mark('48','1')"; onClick="temperature_max_f('2'); mark('48','2')"> 
+				<input type="button" value="+50 - +68" name="button49" 
+				class="button_style" onMouseover="mark('49','0')"; onMouseout="mark('49','1')"; onClick="temperature_max_f('3'); mark('49','2')"> 
+				<input type="button" value="+68 - +86" name="button50" 
+				class="button_style" onMouseover="mark('50','0')"; onMouseout="mark('50','1')"; onClick="temperature_max_f('4'); mark('50','2')"> 
+				<input type="button" value="+86 - +104" name="button51" 
+				class="button_style" onMouseover="mark('51','0')"; onMouseout="mark('51','1')"; onClick="temperature_max_f('5'); mark('51','2')"> 
+				<input type="button" value="+104 - +122" name="button52" 
+				class="button_style" onMouseover="mark('52','0')"; onMouseout="mark('52','1')"; onClick="temperature_max_f('6'); mark('52','2')"> 
+				<input type="button" value="> +122" name="button53" 
+				class="button_style" onMouseover="mark('53','0')"; onMouseout="mark('53','1')"; onClick="temperature_max_f('7'); mark('53','2')">
+ 
+				<br> 
+				<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</ a>
+
+				<input type="button" value="< -30" name="button54" 
+				class="button_style" onMouseover="mark('54','0')"; onMouseout="mark('54','1')"; onClick="temperature_min_c('0'); mark('54','2')"> 
+				<input type="button" value="-30 - -20" name="button55" 
+				class="button_style" onMouseover="mark('55','0')"; onMouseout="mark('55','1')"; onClick="temperature_min_c('1'); mark('55','2')"> 
+				<input type="button" value="-20 - -10" name="button56" 
+				class="button_style" onMouseover="mark('56','0')"; onMouseout="mark('56','1')"; onClick="temperature_min_c('2'); mark('56','2')"> 
+				<input type="button" value="-10 - 0" name="button57" 
+				class="button_style" onMouseover="mark('57','0')"; onMouseout="mark('57','1')"; onClick="temperature_min_c('3'); mark('57','2')"> 
+				<input type="button" value="0 - +10" name="button58" 
+				class="button_style" onMouseover="mark('58','0')"; onMouseout="mark('58','1')"; onClick="temperature_min_c('4'); mark('58','2')"> 
+				<input type="button" value="+10 - +20" name="button59" 
+				class="button_style" onMouseover="mark('59','0')"; onMouseout="mark('59','1')"; onClick="temperature_min_c('5'); mark('59','2')"> 
+				<input type="button" value="+20 - +30" name="button60" 
+				class="button_style" onMouseover="mark('60','0')"; onMouseout="mark('60','1')"; onClick="temperature_min_c('6'); mark('60','2')"> 
+				<input type="button" value="> +30" name="button61" 
+				class="button_style" onMouseover="mark('61','0')"; onMouseout="mark('61','1')"; onClick="temperature_min_c('7'); mark('61','2')">
+ 
+				<br> 
+				<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</ a>
+
+				<input type="button" value="< -22" name="button62" 
+				class="button_style" onMouseover="mark('62','0')"; onMouseout="mark('62','1')"; onClick="temperature_min_f('0'); mark('62','2')"> 
+				<input type="button" value="-22 - -4" name="button63" 
+				class="button_style" onMouseover="mark('63','0')"; onMouseout="mark('63','1')"; onClick="temperature_min_f('1'); mark('63','2')"> 
+				<input type="button" value="-4 - +14" name="button64" 
+				class="button_style" onMouseover="mark('64','0')"; onMouseout="mark('64','1')"; onClick="temperature_min_f('2'); mark('64','2')"> 
+				<input type="button" value="+14 - +32" name="button65" 
+				class="button_style" onMouseover="mark('65','0')"; onMouseout="mark('65','1')"; onClick="temperature_min_f('3'); mark('65','2')"> 
+				<input type="button" value="+32 - +50" name="button66" 
+				class="button_style" onMouseover="mark('66','0')"; onMouseout="mark('66','1')"; onClick="temperature_min_f('4'); mark('66','2')"> 
+				<input type="button" value="+50 - +68" name="button67" 
+				class="button_style" onMouseover="mark('67','0')"; onMouseout="mark('67','1')"; onClick="temperature_min_f('5'); mark('67','2')"> 
+				<input type="button" value="+68 - +86" name="button68" 
+				class="button_style" onMouseover="mark('68','0')"; onMouseout="mark('68','1')"; onClick="temperature_min_f('6'); mark('68','2')"> 
+				<input type="button" value="> +86" name="button69" 
+				class="button_style" onMouseover="mark('69','0')"; onMouseout="mark('69','1')"; onClick="temperature_min_f('7'); mark('69','2')">
+ 
+				<br> 
+
+				<a>Climate zone: </ a>
+				<input type="button" value="arctic" name="button70" 
+				class="button_style" onMouseover="mark('70','0')"; onMouseout="mark('70','1')"; onClick="climate_zone_1('0'); mark('70','2')"> 
+				<input type="button" value="antarctic" name="button71" 
+				class="button_style" onMouseover="mark('71','0')"; onMouseout="mark('71','1')"; onClick="climate_zone_1('1'); mark('71','2')"> 
+				<input type="button" value="temperate" name="button72" 
+				class="button_style" onMouseover="mark('72','0')"; onMouseout="mark('72','1')"; onClick="climate_zone_1('2'); mark('72','2')"> 
+				<input type="button" value="tropical" name="button73" 
+				class="button_style" onMouseover="mark('73','0')"; onMouseout="mark('73','1')"; onClick="climate_zone_1('3'); mark('73','2')">
+
+				<br> 
+
+				<a>Climate  type: </ a>
+				<input type="button" value="cold" name="button74" 
+				class="button_style" onMouseover="mark('74','0')"; onMouseout="mark('74','1')"; onClick="climate_type_1('0'); mark('74','2')"> 
+				<input type="button" value="hot + humid" name="button75" 
+				class="button_style" onMouseover="mark('75','0')"; onMouseout="mark('75','1')"; onClick="climate_type_1('1'); mark('75','2')"> 
+				<input type="button" value="hot + arid" name="button76" 
+				class="button_style" onMouseover="mark('76','0')"; onMouseout="mark('76','1')"; onClick="climate_type_1('2'); mark('76','2')"> 
+				<input type="button" value="temperate" name="button77" 
+				class="button_style" onMouseover="mark('77','0')"; onMouseout="mark('77','1')"; onClick="climate_type_1('3'); mark('77','2')">
+ 
+				<br> 
+
+				<a>Location: </ a>
+				<input type="button" value="inland" name="button78" 
+				class="button_style" onMouseover="mark('78','0')"; onMouseout="mark('78','1')"; onClick="location_ty_1('0'); mark('78','2')"> 
+				<input type="button" value="seahore" name="button79" 
+				class="button_style" onMouseover="mark('79','0')"; onMouseout="mark('79','1')"; onClick="location_ty_1('1'); mark('79','2')"> 
+				<input type="button" value="mountain" name="button80" 
+				class="button_style" onMouseover="mark('80','0')"; onMouseout="mark('80','1')"; onClick="location_ty_1('2'); mark('80','2')"> 
+				<input type="button" value="on water" name="button81" 
+				class="button_style" onMouseover="mark('81','0')"; onMouseout="mark('81','1')"; onClick="location_ty_1('3'); mark('81','2')"> 
+				<input type="button" value="in the air" name="button82" 
+				class="button_style" onMouseover="mark('82','0')"; onMouseout="mark('82','1')"; onClick="location_ty_1('4'); mark('82','2')"> 
+				<input type="button" value="underground" name="button83" 
+				class="button_style" onMouseover="mark('83','0')"; onMouseout="mark('83','1')"; onClick="location_ty_1('5'); mark('83','2')">
+
+				<br> 
+
+				<a>Height amsl: </ a>
+				<input type="button" value="< -500" name="button84" 
+				class="button_style" onMouseover="mark('84','0')"; onMouseout="mark('84','1')"; onClick="height_average_meter('0'); mark('84','2')"> 
+				<input type="button" value="-500 - 0" name="button85" 
+				class="button_style" onMouseover="mark('85','0')"; onMouseout="mark('85','1')"; onClick="height_average_meter('1'); mark('85','2')"> 
+				<input type="button" value="0 - 500" name="button86" 
+				class="button_style" onMouseover="mark('86','0')"; onMouseout="mark('86','1')"; onClick="height_average_meter('2'); mark('86','2')"> 
+				<input type="button" value="500 - 1000" name="button87" 
+				class="button_style" onMouseover="mark('87','0')"; onMouseout="mark('87','1')"; onClick="height_average_meter('3'); mark('87','2')"> 
+				<input type="button" value="1000 - 1500" name="button88" 
+				class="button_style" onMouseover="mark('88','0')"; onMouseout="mark('88','1')"; onClick="height_average_meter('4'); mark('88','2')"> 
+				<input type="button" value="1500 - 2000" name="button89" 
+				class="button_style" onMouseover="mark('89','0')"; onMouseout="mark('89','1')"; onClick="height_average_meter('5'); mark('89','2')"> 
+				<input type="button" value="2000 - 2500" name="button90" 
+				class="button_style" onMouseover="mark('90','0')"; onMouseout="mark('90','1')"; onClick="height_average_meter('6'); mark('90','2')"> 
+				<input type="button" value="> 2500" name="button91" 
+				class="button_style" onMouseover="mark('91','0')"; onMouseout="mark('91','1')"; onClick="height_average_meter('7'); mark('91','2')">
+
+				<br> 
+				<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</ a>
+
+				<input type="button" value="< -1312" name="button92" 
+				class="button_style" onMouseover="mark('92','0')"; onMouseout="mark('92','1')"; onClick="height_average_feet('0'); mark('92','2')"> 
+				<input type="button" value="-1312 - 0" name="button93" 
+				class="button_style" onMouseover="mark('93','0')"; onMouseout="mark('93','1')"; onClick="height_average_feet('1'); mark('93','2')"> 
+				<input type="button" value="0 - 1640" name="button94" 
+				class="button_style" onMouseover="mark('94','0')"; onMouseout="mark('94','1')"; onClick="height_average_feet('2'); mark('94','2')"> 
+				<input type="button" value="1640 - 3280" name="button95" 
+				class="button_style" onMouseover="mark('95','0')"; onMouseout="mark('95','1')"; onClick="height_average_feet('3'); mark('95','2')"> 
+				<input type="button" value="3280 - 4921" name="button96" 
+				class="button_style" onMouseover="mark('96','0')"; onMouseout="mark('96','1')"; onClick="height_average_feet('4'); mark('96','2')"> 
+				<input type="button" value="4921 - 6561" name="button97" 
+				class="button_style" onMouseover="mark('97','0')"; onMouseout="mark('97','1')"; onClick="height_average_feet('5'); mark('97','2')"> 
+				<input type="button" value="6561 - 8202" name="button98" 
+				class="button_style" onMouseover="mark('98','0')"; onMouseout="mark('98','1')"; onClick="height_average_feet('6'); mark('98','2')"> 
+				<input type="button" value="> 8202" name="button99" 
+				class="button_style" onMouseover="mark('99','0')"; onMouseout="mark('99','1')"; onClick="height_average_feet('7'); mark('99','2')">
+
+				<br> 
+
+				<a>Velocity of wind: </ a>
+				<input type="button" value="0 - <11" name="button100" 
+				class="button_style" onMouseover="mark('100','0')"; onMouseout="mark('100','1')"; onClick="velocity_wind_max('0'); mark('100','2')"> 
+				<input type="button" value="11 - <22" name="button101" 
+				class="button_style" onMouseover="mark('101','0')"; onMouseout="mark('101','1')"; onClick="velocity_wind_max('1'); mark('101','2')"> 
+				<input type="button" value="22 - <34" name="button102" 
+				class="button_style" onMouseover="mark('102','0')"; onMouseout="mark('102','1')"; onClick="velocity_wind_max('2'); mark('102','2')"> 
+				<input type="button" value="<34 - <48" name="button103" 
+				class="button_style" onMouseover="mark('103','0')"; onMouseout="mark('103','1')"; onClick="velocity_wind_max('3'); mark('103','2')"> 
+				<input type="button" value="48 - <56" name="button104" 
+				class="button_style" onMouseover="mark('104','0')"; onMouseout="mark('104','1')"; onClick="velocity_wind_max('4'); mark('104','2')"> 
+				<input type="button" value="56 - <64" name="button105" 
+				class="button_style" onMouseover="mark('105','0')"; onMouseout="mark('105','1')"; onClick="velocity_wind_max('5'); mark('105','2')"> 
+				<input type="button" value="64 - >64" name="button106" 
+				class="button_style" onMouseover="mark('106','0')"; onMouseout="mark('106','1')"; onClick="velocity_wind_max('6'); mark('106','2')">
+
+				<br> 
+				<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</ a>
+
+				<input type="button" value="0 - <11" name="button107" 
+				class="button_style" onMouseover="mark('107','0')"; onMouseout="mark('107','1')"; onClick="velocity_wind_av_kn('0'); mark('107','2')"> 
+				<input type="button" value="11 - <22" name="button108" 
+				class="button_style" onMouseover="mark('108','0')"; onMouseout="mark('108','1')"; onClick="velocity_wind_av_kn('1'); mark('108','2')"> 
+				<input type="button" value="22 - <34" name="button109" 
+				class="button_style" onMouseover="mark('109','0')"; onMouseout="mark('109','1')"; onClick="velocity_wind_av_kn('2'); mark('109','2')"> 
+				<input type="button" value="34 - <48" name="button110" 
+				class="button_style" onMouseover="mark('110','0')"; onMouseout="mark('110','1')"; onClick="velocity_wind_av_kn('3'); mark('110','2')"> 
+				<input type="button" value="48 - <56" name="button111" 
+				class="button_style" onMouseover="mark('111','0')"; onMouseout="mark('111','1')"; onClick="velocity_wind_av_kn('4'); mark('111','2')"> 
+				<input type="button" value="56 - <64" name="button112" 
+				class="button_style" onMouseover="mark('112','0')"; onMouseout="mark('112','1')"; onClick="velocity_wind_av_kn('5'); mark('112','2')"> 
+				<input type="button" value="64 - >64" name="button113" 
+				class="button_style" onMouseover="mark('113','0')"; onMouseout="mark('113','1')"; onClick="velocity_wind_av_kn('6'); mark('113','2')">
+
+				<br> 
+				<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</ a>
+
+				<input type="button" value="0 - 3" name="button114" 
+				class="button_style" onMouseover="mark('114','0')"; onMouseout="mark('114','1')"; onClick="velocity_wind_av_bft('0'); mark('114','2')"> 
+				<input type="button" value="4 - 5" name="button115" 
+				class="button_style" onMouseover="mark('115','0')"; onMouseout="mark('115','1')"; onClick="velocity_wind_av_bft('1'); mark('115','2')"> 
+				<input type="button" value="6 - 7" name="button116" 
+				class="button_style" onMouseover="mark('116','0')"; onMouseout="mark('116','1')"; onClick="velocity_wind_av_bft('2'); mark('116','2')"> 
+				<input type="button" value="8 - 9" name="button117" 
+				class="button_style" onMouseover="mark('117','0')"; onMouseout="mark('117','1')"; onClick="velocity_wind_av_bft('3'); mark('117','2')"> 
+				<input type="button" value="10" name="button118" 
+				class="button_style" onMouseover="mark('118','0')"; onMouseout="mark('118','1')"; onClick="velocity_wind_av_bft('4'); mark('118','2')"> 
+				<input type="button" value="11" name="button119" 
+				class="button_style" onMouseover="mark('119','0')"; onMouseout="mark('119','1')"; onClick="velocity_wind_av_bft('5'); mark('119','2')"> 
+				<input type="button" value="12 - >12" name="button120" 
+				class="button_style" onMouseover="mark('120','0')"; onMouseout="mark('120','1')"; onClick="velocity_wind_av_bft('6'); mark('120','2')">
+
+				<br> 
+				<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</ a>
+
+				<input type="button" value="0 - 19" name="button121" 
+				class="button_style" onMouseover="mark('121','0')"; onMouseout="mark('121','1')"; onClick="velocity_wind_av_km('0'); mark('121','2')"> 
+				<input type="button" value="20 - 38" name="button122" 
+				class="button_style" onMouseover="mark('122','0')"; onMouseout="mark('122','1')"; onClick="velocity_wind_av_km('1'); mark('122','2')"> 
+				<input type="button" value="39 - 61" name="button123" 
+				class="button_style" onMouseover="mark('123','0')"; onMouseout="mark('123','1')"; onClick="velocity_wind_av_km('2'); mark('123','2')"> 
+				<input type="button" value="62 - 88" name="button124" 
+				class="button_style" onMouseover="mark('124','0')"; onMouseout="mark('124','1')"; onClick="velocity_wind_av_km('3'); mark('124','2')"> 
+				<input type="button" value="89 - 102" name="button125" 
+				class="button_style" onMouseover="mark('125','0')"; onMouseout="mark('125','1')"; onClick="velocity_wind_av_km('4'); mark('125','2')"> 
+				<input type="button" value="103 - 117" name="button126" 
+				class="button_style" onMouseover="mark('126','0')"; onMouseout="mark('126','1')"; onClick="velocity_wind_av_km('5'); mark('126','2')"> 
+				<input type="button" value="118 - >118" name="button127" 
+				class="button_style" onMouseover="mark('127','0')"; onMouseout="mark('127','1')"; onClick="velocity_wind_av_km('6'); mark('127','2')">
+
+				<br> 
+
+				<a>Solar radiation: </ a>
+				<input type="button" value="< 101" name="button128" 
+				class="button_style" onMouseover="mark('128','0')"; onMouseout="mark('128','1')"; onClick="solar_radiation_av_kwh('0'); mark('128','2')"> 
+				<input type="button" value="1 - 1.9" name="button129" 
+				class="button_style" onMouseover="mark('129','0')"; onMouseout="mark('129','1')"; onClick="solar_radiation_av_kwh('1'); mark('129','2')"> 
+				<input type="button" value="2 - 2.9" name="button130" 
+				class="button_style" onMouseover="mark('130','0')"; onMouseout="mark('130','1')"; onClick="solar_radiation_av_kwh('2'); mark('130','2')"> 
+				<input type="button" value="3 - 3.9" name="button131" 
+				class="button_style" onMouseover="mark('131','0')"; onMouseout="mark('131','1')"; onClick="solar_radiation_av_kwh('3'); mark('131','2')"> 
+				<input type="button" value="4 - 4.9" name="button132" 
+				class="button_style" onMouseover="mark('132','0')"; onMouseout="mark('132','1')"; onClick="solar_radiation_av_kwh('4'); mark('132','2')"> 
+				<input type="button" value="5 - 5.9" name="button133" 
+				class="button_style" onMouseover="mark('133','0')"; onMouseout="mark('133','1')"; onClick="solar_radiation_av_kwh('5'); mark('133','2')"> 
+				<input type="button" value="6 - 6.9" name="button134" 
+				class="button_style" onMouseover="mark('134','0')"; onMouseout="mark('134','1')"; onClick="solar_radiation_av_kwh('6'); mark('134','2')"> 
+				<input type="button" value="> 6.9" name="button135" 
+				class="button_style" onMouseover="mark('135','0')"; onMouseout="mark('135','1')"; onClick="solar_radiation_av_kwh('7'); mark('135','2')">
+
+				<br> 
+
+				<a>Vegetation: </ a>
+				<input type="button" value="rain forest" name="button136" 
+				class="button_style" onMouseover="mark('136','0')"; onMouseout="mark('136','1')"; onClick="vegetation_1('0'); mark('136','2')"> 
+				<input type="button" value="forest" name="button137" 
+				class="button_style" onMouseover="mark('137','0')"; onMouseout="mark('137','1')"; onClick="vegetation_1('1'); mark('137','2')"> 
+				<input type="button" value="grass" name="button138" 
+				class="button_style" onMouseover="mark('138','0')"; onMouseout="mark('138','1')"; onClick="vegetation_1('2'); mark('138','2')"> 
+				<input type="button" value="none" name="button139" 
+				class="button_style" onMouseover="mark('139','0')"; onMouseout="mark('139','1')"; onClick="vegetation_1('3'); mark('139','2')"> 
+				<input type="button" value="other" name="button140" 
+				class="button_style" onMouseover="mark('140','0')"; onMouseout="mark('140','1')"; onClick="vegetation_1('4'); mark('140','2')">
+
+				<br> 
+
+				<a>Water access: </ a>
+				<input type="button" value="sea" name="button141" 
+				class="button_style" onMouseover="mark('141','0')"; onMouseout="mark('141','1')"; onClick="water_access_1('0'); mark('141','2')"> 
+				<input type="button" value="river" name="button142" 
+				class="button_style" onMouseover="mark('142','0')"; onMouseout="mark('142','1')"; onClick="water_access_1('1'); mark('142','2')"> 
+				<input type="button" value="groundwater" name="button143" 
+				class="button_style" onMouseover="mark('143','0')"; onMouseout="mark('143','1')"; onClick="water_access_1('2'); mark('143','2')"> 
+				<input type="button" value="well" name="button144" 
+				class="button_style" onMouseover="mark('144','0')"; onMouseout="mark('144','1')"; onClick="water_access_1('3'); mark('144','2')"> 
+				<input type="button" value="lake" name="button145" 
+				class="button_style" onMouseover="mark('145','0')"; onMouseout="mark('145','1')"; onClick="water_access_1('4'); mark('145','2')"> 
+				<input type="button" value="none" name="button146" 
+				class="button_style" onMouseover="mark('146','0')"; onMouseout="mark('146','1')"; onClick="water_access_1('5'); mark('146','2')">
+
+				<br> 
+
+				<a>Volcano: </ a>
+				<input type="button" value="no volcano" name="button147" 
+				class="button_style" onMouseover="mark('147','0')"; onMouseout="mark('147','1')"; onClick="volcano_radius_1('0'); mark('147','2')"> 
+				<input type="button" value="inactive" name="button148" 
+				class="button_style" onMouseover="mark('148','0')"; onMouseout="mark('148','1')"; onClick="volcano_radius_1('1'); mark('148','2')"> 
+				<input type="button" value="p.active" name="button149" 
+				class="button_style" onMouseover="mark('149','0')"; onMouseout="mark('149','1')"; onClick="volcano_radius_1('2'); mark('149','2')"> 
+				<input type="button" value="active" name="button150" 
+				class="button_style" onMouseover="mark('150','0')"; onMouseout="mark('150','1')"; onClick="volcano_radius_1('3'); mark('150','2')">
+
+				<br> 
+
+				<a>Earthquake: </ a>
+				<input type="button" value="very low" name="button151" 
+				class="button_style" onMouseover="mark('151','0')"; onMouseout="mark('151','1')"; onClick="earthquake_risk_1('0'); mark('151','2')"> 
+				<input type="button" value="low" name="button152" 
+				class="button_style" onMouseover="mark('152','0')"; onMouseout="mark('152','1')"; onClick="earthquake_risk_1('1'); mark('152','2')"> 
+				<input type="button" value="moderate" name="button153" 
+				class="button_style" onMouseover="mark('153','0')"; onMouseout="mark('153','1')"; onClick="earthquake_risk_1('2'); mark('153','2')"> 
+				<input type="button" value="high" name="button154" 
+				class="button_style" onMouseover="mark('154','0')"; onMouseout="mark('154','1')"; onClick="earthquake_risk_1('3'); mark('154','2')"> 
+				<input type="button" value="very high" name="button155" 
+				class="button_style" onMouseover="mark('155','0')"; onMouseout="mark('155','1')"; onClick="earthquake_risk_1('4'); mark('155','2')">
+
+				<br>
+				<input type="button" value="calc" name="button5000" 
+				onClick="calculate_result()"> 
+					
+
+</form>
+
+<body>
+<div id="result0"></div>
+<div id="result1"></div>
+<div id="result2"></div>
+<div id="result3"></div>
+<div id="result4"></div>
+<div id="result5"></div>
+<div id="result6"></div>
+<div id="result7"></div>
+<div id="result8"></div>
+<div id="result9"></div>
+</body>
+	
+</html>
