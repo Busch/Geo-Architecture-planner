@@ -3,11 +3,12 @@
 <head>
 	
 <style type="text/css">
-input.button_style { background-color:#aaa; color:#fff; width:95px; border:6px solid #ddd; }
-body { background: url('/images/layout/background.jpg') 50% -100px fixed no-repeat #1c1d26; font-family: Tahoma, Verdana, Arial, Sans-serif; 
+	input.button_style { background-color:#aaa; color:#fff; width:95px; border:6px solid #ddd; }
+	body { background: url('/images/layout/background.jpg') 50% -100px fixed no-repeat #1c1d26; font-family: Tahoma, Verdana, Arial, Sans-serif; 
 }
 
 /* Info Box */
+
 
 table#elements td .info {
 	background: white !important;
@@ -142,257 +143,257 @@ function calculate_result() {
 	
 	// Check for drought
 	if (prec_average[0] || 
-	prec_average[1] ||
-	prec_month_no_rain[4] ||
-	prec_month_no_rain[5] ||
-	prec_month_no_rain[6] ||
-	temp_average_c[6] ||
-	temp_average_c[7] ||
-	temp_average_f[6] ||
-	temp_average_f[7] ||
-	temp_max_c[6] ||
-	temp_max_c[7] ||
-	temp_max_f[6] ||
-	temp_max_f[7] ||
-	temp_min_c[6] ||
-	temp_min_c[7] ||
-	temp_min_f[6] ||
-	temp_min_f[7] ||
-	climate_zone[3] ||
-	climate_type[2] ||
-	location_ty[0] ||
-	veloc_wind_av_kn[2] ||
-	veloc_wind_av_kn[3] ||
-	veloc_wind_av_kn[4] ||
-	veloc_wind_av_kn[5] ||
-	veloc_wind_av_kn[6] ||
-	veloc_wind_av_bft[2] ||
-	veloc_wind_av_bft[3] ||
-	veloc_wind_av_bft[4] ||
-	veloc_wind_av_bft[5] ||
-	veloc_wind_av_bft[6] ||
-	veloc_wind_av_km[2] ||
-	veloc_wind_av_km[3] ||
-	veloc_wind_av_km[4] ||
-	veloc_wind_av_km[5] ||
-	veloc_wind_av_km[6] ||
-	solar_rad_av_kwh[5] ||
-	solar_rad_av_kwh[6] ||
-	solar_rad_av_kwh[7] ||
-	vegetation[2] ||
-	vegetation[3] ||
-	water_access[5]
+		prec_average[1] ||
+		prec_month_no_rain[4] ||
+		prec_month_no_rain[5] ||
+		prec_month_no_rain[6] ||
+		temp_average_c[6] ||
+		temp_average_c[7] ||
+		temp_average_f[6] ||
+		temp_average_f[7] ||
+		temp_max_c[6] ||
+		temp_max_c[7] ||
+		temp_max_f[6] ||
+		temp_max_f[7] ||
+		temp_min_c[6] ||
+		temp_min_c[7] ||
+		temp_min_f[6] ||
+		temp_min_f[7] ||
+		climate_zone[3] ||
+		climate_type[2] ||
+		location_ty[0] ||
+		veloc_wind_av_kn[2] ||
+		veloc_wind_av_kn[3] ||
+		veloc_wind_av_kn[4] ||
+		veloc_wind_av_kn[5] ||
+		veloc_wind_av_kn[6] ||
+		veloc_wind_av_bft[2] ||
+		veloc_wind_av_bft[3] ||
+		veloc_wind_av_bft[4] ||
+		veloc_wind_av_bft[5] ||
+		veloc_wind_av_bft[6] ||
+		veloc_wind_av_km[2] ||
+		veloc_wind_av_km[3] ||
+		veloc_wind_av_km[4] ||
+		veloc_wind_av_km[5] ||
+		veloc_wind_av_km[6] ||
+		solar_rad_av_kwh[5] ||
+		solar_rad_av_kwh[6] ||
+		solar_rad_av_kwh[7] ||
+		vegetation[2] ||
+		vegetation[3] ||
+		water_access[5]
 	== 1) { drought = 1; } else { drought = 0; }
 	// End Check for drought
 	
 	// Check for fire
 	if (prec_average[0] ||
-	prec_month_no_rain[4] ||
-	prec_month_no_rain[5] ||
-	prec_month_no_rain[6] ||
-	temp_average_c[6] ||
-	temp_average_c[7] ||
-	temp_average_f[6] ||
-	temp_average_f[7] ||
-	temp_max_c[6] ||
-	temp_max_c[7] ||
-	temp_max_f[6] ||
-	temp_max_f[7] ||
-	temp_min_c[6] ||
-	temp_min_c[7] ||
-	temp_min_f[6] ||
-	temp_min_f[7] ||
-	location_ty[1] ||
-	solar_rad_av_kwh[5] ||
-	solar_rad_av_kwh[6] ||
-	solar_rad_av_kwh[7] ||
-	vegetation[1] ||
-	vegetation[2] ||
-	volcano_radius[2] ||
-	volcano_radius[3]
+		prec_month_no_rain[4] ||
+		prec_month_no_rain[5] ||
+		prec_month_no_rain[6] ||
+		temp_average_c[6] ||
+		temp_average_c[7] ||
+		temp_average_f[6] ||
+		temp_average_f[7] ||
+		temp_max_c[6] ||
+		temp_max_c[7] ||
+		temp_max_f[6] ||
+		temp_max_f[7] ||
+		temp_min_c[6] ||
+		temp_min_c[7] ||
+		temp_min_f[6] ||
+		temp_min_f[7] ||
+		location_ty[1] ||
+		solar_rad_av_kwh[5] ||
+		solar_rad_av_kwh[6] ||
+		solar_rad_av_kwh[7] ||
+		vegetation[1] ||
+		vegetation[2] ||
+		volcano_radius[2] ||
+		volcano_radius[3]
 	== 1) { fire = 1; } else { fire = 0; }
 	// End Check for fire
 		
 	// Check for flood
 	if (prec_average[6] ||
-	prec_average[7] ||
-	prec_month[1] ||
-	prec_month[2] ||
-	climate_zone[3] ||
-	climate_type[1] ||
-	climate_type[3] ||
-	location_ty[0] ||
-	location_ty[1] ||
-	location_ty[3] ||
-	location_ty[5] ||
-	height_average_m[0] ||
-	height_average_m[1] ||
-	height_average_m[2] ||
-	height_average_ft[0] ||
-	height_average_ft[1] ||
-	height_average_ft[2] ||
-	veloc_wind_max[4] ||
-	veloc_wind_max[5] ||
-	veloc_wind_max[6] ||
-	veloc_wind_av_kn[4] ||
-	veloc_wind_av_kn[5] ||
-	veloc_wind_av_kn[6] ||
-	veloc_wind_av_bft[4] ||
-	veloc_wind_av_bft[5] ||
-	veloc_wind_av_bft[6] ||
-	veloc_wind_av_km[4] ||
-	veloc_wind_av_km[5] ||
-	veloc_wind_av_km[6] ||
-	vegetation[3] ||
-	water_access[0] ||
-	water_access[1] ||
-	water_access[4] ||
-	volcano_radius[2] ||
-	volcano_radius[3] ||
-	earthquake_risk[2] ||
-	earthquake_risk[3] ||
-	earthquake_risk[4]
+		prec_average[7] ||
+		prec_month[1] ||
+		prec_month[2] ||
+		climate_zone[3] ||
+		climate_type[1] ||
+		climate_type[3] ||
+		location_ty[0] ||
+		location_ty[1] ||
+		location_ty[3] ||
+		location_ty[5] ||
+		height_average_m[0] ||
+		height_average_m[1] ||
+		height_average_m[2] ||
+		height_average_ft[0] ||
+		height_average_ft[1] ||
+		height_average_ft[2] ||
+		veloc_wind_max[4] ||
+		veloc_wind_max[5] ||
+		veloc_wind_max[6] ||
+		veloc_wind_av_kn[4] ||
+		veloc_wind_av_kn[5] ||
+		veloc_wind_av_kn[6] ||
+		veloc_wind_av_bft[4] ||
+		veloc_wind_av_bft[5] ||
+		veloc_wind_av_bft[6] ||
+		veloc_wind_av_km[4] ||
+		veloc_wind_av_km[5] ||
+		veloc_wind_av_km[6] ||
+		vegetation[3] ||
+		water_access[0] ||
+		water_access[1] ||
+		water_access[4] ||
+		volcano_radius[2] ||
+		volcano_radius[3] ||
+		earthquake_risk[2] ||
+		earthquake_risk[3] ||
+		earthquake_risk[4]
 	== 1) { flood = 1; } else { flood = 0; }
 	// End Check for flood
 	
 	// Check for earthquake
 	if (earthquake_risk[2] ||
-	earthquake_risk[3] ||
-	earthquake_risk[4]
+		earthquake_risk[3] ||
+		earthquake_risk[4]
 	== 1) { earthquake = 1; } else { earthquake = 0; }
 	// End Check for earthquake
 	
 	// Check for infectious deseases
 	if (prec_average[6] || 
-	prec_average[7] ||
-	prec_month[1] ||
-	prec_month_no_rain[1] ||
-	temp_average_c[7] ||
-	temp_average_f[7] ||
-	temp_max_c[6] ||
-	temp_max_c[7] ||
-	temp_max_f[6] ||
-	temp_max_f[7] ||
-	climate_zone[3] ||
-	climate_type[1] ||
-	water_access[4] ||
-	water_access[5]
+		prec_average[7] ||
+		prec_month[1] ||
+		prec_month_no_rain[1] ||
+		temp_average_c[7] ||
+		temp_average_f[7] ||
+		temp_max_c[6] ||
+		temp_max_c[7] ||
+		temp_max_f[6] ||
+		temp_max_f[7] ||
+		climate_zone[3] ||
+		climate_type[1] ||
+		water_access[4] ||
+		water_access[5]
 	== 1) { infectious_deseases = 1; } else { infectious_deseases = 0; }
 	// End Check for infectious deseases
 	
 	// Check for earth movement
 	if (prec_average[6] || 
-	prec_average[7] ||
-	prec_month[1] ||
-	prec_month_no_rain[5] ||
-	prec_month_no_rain[6] ||
-	location_ty[0] ||
-	location_ty[2] ||
-	location_ty[5] ||
-	vegetation[2] ||
-	vegetation[3] ||
-	volcano_radius[2] ||
-	volcano_radius[3] ||
-	earthquake_risk[2] ||
-	earthquake_risk[3] ||
-	earthquake_risk[4]
+		prec_average[7] ||
+		prec_month[1] ||
+		prec_month_no_rain[5] ||
+		prec_month_no_rain[6] ||
+		location_ty[0] ||
+		location_ty[2] ||
+		location_ty[5] ||
+		vegetation[2] ||
+		vegetation[3] ||
+		volcano_radius[2] ||
+		volcano_radius[3] ||
+		earthquake_risk[2] ||
+		earthquake_risk[3] ||
+		earthquake_risk[4]
 	== 1) { earth_movement = 1; } else { earth_movement = 0; }
 	// End Check for earth movement
 	
 	// Check for precipitation
 	if (prec_average[0] ||
-	prec_average[1] ||
-	prec_average[6] || 
-	prec_average[7] ||
-	prec_month[1] ||
-	prec_month_no_rain[1] ||
-	prec_month_no_rain[6] ||
-	climate_zone[3] ||
-	climate_type[1] ||
-	climate_type[2]
+		prec_average[1] ||
+		prec_average[6] || 
+		prec_average[7] ||
+		prec_month[1] ||
+		prec_month_no_rain[1] ||
+		prec_month_no_rain[6] ||
+		climate_zone[3] ||
+		climate_type[1] ||
+		climate_type[2]
 	== 1) { precipitation = 1; } else { precipitation = 0; }
 	// End Check for precipitation
 	
 	// Check for temperature
 	if (temp_average_c[0] ||
-	temp_average_c[1] ||
-	temp_average_c[2] ||
-	temp_average_c[6] ||
-	temp_average_c[7] ||
-	temp_average_f[0] ||
-	temp_average_f[1] ||
-	temp_average_f[2] ||
-	temp_average_f[6] ||
-	temp_average_f[7] ||
-	temp_max_c[0] ||
-	temp_max_c[1] ||
-	temp_max_c[6] ||
-	temp_max_c[7] ||
-	temp_max_f[0] ||
-	temp_max_f[1] ||
-	temp_max_f[6] ||
-	temp_max_f[7] ||
-	temp_min_c[0] ||
-	temp_min_c[1] ||
-	temp_min_c[7] ||
-	temp_min_f[0] ||
-	temp_min_f[1] ||
-	temp_min_f[7] ||
-	climate_zone[0] ||
-	climate_zone[1] ||
-	climate_zone[3] ||
-	climate_type[0] ||
-	climate_type[1] ||
-	climate_type[2] ||
-	solar_rad_av_kwh[0] ||
-	solar_rad_av_kwh[1] ||
-	solar_rad_av_kwh[5] ||
-	solar_rad_av_kwh[6] ||
-	solar_rad_av_kwh[7]
+		temp_average_c[1] ||
+		temp_average_c[2] ||
+		temp_average_c[6] ||
+		temp_average_c[7] ||
+		temp_average_f[0] ||
+		temp_average_f[1] ||
+		temp_average_f[2] ||
+		temp_average_f[6] ||
+		temp_average_f[7] ||
+		temp_max_c[0] ||
+		temp_max_c[1] ||
+		temp_max_c[6] ||
+		temp_max_c[7] ||
+		temp_max_f[0] ||
+		temp_max_f[1] ||
+		temp_max_f[6] ||
+		temp_max_f[7] ||
+		temp_min_c[0] ||
+		temp_min_c[1] ||
+		temp_min_c[7] ||
+		temp_min_f[0] ||
+		temp_min_f[1] ||
+		temp_min_f[7] ||
+		climate_zone[0] ||
+		climate_zone[1] ||
+		climate_zone[3] ||
+		climate_type[0] ||
+		climate_type[1] ||
+		climate_type[2] ||
+		solar_rad_av_kwh[0] ||
+		solar_rad_av_kwh[1] ||
+		solar_rad_av_kwh[5] ||
+		solar_rad_av_kwh[6] ||
+		solar_rad_av_kwh[7]
 	== 1) { temperature = 1; } else { temperature = 0; }
 	// End Check for temperature
 	
 	// Check for storm
 	if (temp_average_c[7] ||
-	temp_average_f[7] ||
-	temp_max_c[7] ||
-	temp_max_f[7] ||
-	temp_min_c[7] ||
-	temp_min_f[7] ||
-	location_ty[0] ||
-	location_ty[1] ||
-	location_ty[2] ||
-	location_ty[3] ||
-	location_ty[4] ||
-	height_average_m[6] ||
-	height_average_m[7] ||
-	height_average_ft[6] ||
-	height_average_ft[7] ||	
-	veloc_wind_max[3] ||
-	veloc_wind_max[4] ||
-	veloc_wind_max[5] ||
-	veloc_wind_max[6] ||
-	veloc_wind_av_kn[2] ||
-	veloc_wind_av_kn[3] ||
-	veloc_wind_av_kn[4] ||
-	veloc_wind_av_kn[5] ||
-	veloc_wind_av_kn[6] ||
-	veloc_wind_av_bft[2] ||
-	veloc_wind_av_bft[3] ||
-	veloc_wind_av_bft[4] ||
-	veloc_wind_av_bft[5] ||
-	veloc_wind_av_bft[6] ||
-	veloc_wind_av_km[2] ||
-	veloc_wind_av_km[3] ||
-	veloc_wind_av_km[4] ||
-	veloc_wind_av_km[5] ||
-	veloc_wind_av_km[6]
+		temp_average_f[7] ||
+		temp_max_c[7] ||
+		temp_max_f[7] ||
+		temp_min_c[7] ||
+		temp_min_f[7] ||
+		location_ty[0] ||
+		location_ty[1] ||
+		location_ty[2] ||
+		location_ty[3] ||
+		location_ty[4] ||
+		height_average_m[6] ||
+		height_average_m[7] ||
+		height_average_ft[6] ||
+		height_average_ft[7] ||	
+		veloc_wind_max[3] ||
+		veloc_wind_max[4] ||
+		veloc_wind_max[5] ||
+		veloc_wind_max[6] ||
+		veloc_wind_av_kn[2] ||
+		veloc_wind_av_kn[3] ||
+		veloc_wind_av_kn[4] ||
+		veloc_wind_av_kn[5] ||
+		veloc_wind_av_kn[6] ||
+		veloc_wind_av_bft[2] ||
+		veloc_wind_av_bft[3] ||
+		veloc_wind_av_bft[4] ||
+		veloc_wind_av_bft[5] ||
+		veloc_wind_av_bft[6] ||
+		veloc_wind_av_km[2] ||
+		veloc_wind_av_km[3] ||
+		veloc_wind_av_km[4] ||
+		veloc_wind_av_km[5] ||
+		veloc_wind_av_km[6]
 	== 1) { storm = 1; } else { storm = 0; }
 	// End Check for storm
 		
 	// Check for volcano
 	if (volcano_radius[2] ||
-	volcano_radius[3]
+		volcano_radius[3]
 	== 1) { volcano = 1; } else { volcano = 0; }
 	// End Check for volcano
 			
@@ -454,11 +455,11 @@ function check_inhibiting_factor() {
 		drought = 0;
 		fire = 0; 
 	}
-	
 	print_array();
-}
+} 
 
 function output() {
+	// Empty
 }
 
 function mark(which, type) {
@@ -516,11 +517,12 @@ function mark(which, type) {
 
 <form name="myForm">
 
-		<div id="container">
-			<div id="content">
-					
-				<table id="elements" cellpadding="0" cellspacing="0">
-				<tr><td>
+	<div id="container">
+		<div id="content">
+				
+			<table id="elements" cellpadding="0" cellspacing="0">
+				<tr>
+				<td>
 					<div class="element table">
 					<div class="info">
 						<h3>Bla</h3>
@@ -528,29 +530,30 @@ function mark(which, type) {
 					</div>
 						<span style="color:#FF0000">Precipitation: </span>
 					</div>
-				</tr></td>
-				</table>
+				</tr>
+				</td>
+			</table>
 
-				<input type="button" value="0 - 124" name="button0"
-				class="button_style" onMouseover="mark('0','0')"; onMouseout="mark('0','1')"; onClick="precipitation_average('0'); mark('0','2')">
-				<input type="button" value="125 - 274" name="button1" 
-				class="button_style" onMouseover="mark('1','0')"; onMouseout="mark('1','1')"; onClick="precipitation_average('1'); mark('1','2')"> 
-				<input type="button" value="275 - 474" name="button2" 
-				class="button_style" onMouseover="mark('2','0')"; onMouseout="mark('2','1')"; onClick="precipitation_average('2'); mark('2','2')"> 
-				<input type="button" value="475 - 724" name="button3" 
-				class="button_style" onMouseover="mark('3','0')"; onMouseout="mark('3','1')"; onClick="precipitation_average('3'); mark('3','2')">
-				<input type="button" value="725 -1474" name="button4" 
-				class="button_style" onMouseover="mark('4','0')"; onMouseout="mark('4','1')"; onClick="precipitation_average('4'); mark('4','2')"> 
-				<input type="button" value="1475 - 2474" name="button5" 
-				class="button_style" onMouseover="mark('5','0')"; onMouseout="mark('5','1')"; onClick="precipitation_average('5'); mark('5','2')"> 
-				<input type="button" value="2475 - 4975" name="button6" 
-				class="button_style" onMouseover="mark('6','0')"; onMouseout="mark('6','1')"; onClick="precipitation_average('6'); mark('6','2')"> 
-				<input type="button" value="> 4975" name="button7" 
-				class="button_style" onMouseover="mark('7','0')"; onMouseout="mark('7','1')"; onClick="precipitation_average('7'); mark('7','2')">
+			<input type="button" value="0 - 124" name="button0"
+			class="button_style" onMouseover="mark('0','0')"; onMouseout="mark('0','1')"; onClick="precipitation_average('0'); mark('0','2')">
+			<input type="button" value="125 - 274" name="button1" 
+			class="button_style" onMouseover="mark('1','0')"; onMouseout="mark('1','1')"; onClick="precipitation_average('1'); mark('1','2')"> 
+			<input type="button" value="275 - 474" name="button2" 
+			class="button_style" onMouseover="mark('2','0')"; onMouseout="mark('2','1')"; onClick="precipitation_average('2'); mark('2','2')"> 
+			<input type="button" value="475 - 724" name="button3" 
+			class="button_style" onMouseover="mark('3','0')"; onMouseout="mark('3','1')"; onClick="precipitation_average('3'); mark('3','2')">
+			<input type="button" value="725 -1474" name="button4" 
+			class="button_style" onMouseover="mark('4','0')"; onMouseout="mark('4','1')"; onClick="precipitation_average('4'); mark('4','2')"> 
+			<input type="button" value="1475 - 2474" name="button5" 
+			class="button_style" onMouseover="mark('5','0')"; onMouseout="mark('5','1')"; onClick="precipitation_average('5'); mark('5','2')"> 
+			<input type="button" value="2475 - 4975" name="button6" 
+			class="button_style" onMouseover="mark('6','0')"; onMouseout="mark('6','1')"; onClick="precipitation_average('6'); mark('6','2')"> 
+			<input type="button" value="> 4975" name="button7" 
+			class="button_style" onMouseover="mark('7','0')"; onMouseout="mark('7','1')"; onClick="precipitation_average('7'); mark('7','2')">
 
-				<br> 
-				<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</ a>
+			<br> 
+			<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</ a>
 
 				<input type="button" value="0" name="button8" 
 				class="button_style" onMouseover="mark('8','0')"; onMouseout="mark('8','1')"; onClick="precipitation_month('0'); mark('8','2')"> 
@@ -951,6 +954,7 @@ function mark(which, type) {
 </form>
 
 <body>
+
 <div id="result0"></div>
 <div id="result1"></div>
 <div id="result2"></div>
@@ -961,6 +965,7 @@ function mark(which, type) {
 <div id="result7"></div>
 <div id="result8"></div>
 <div id="result9"></div>
+
 </body>
 	
 </html>
